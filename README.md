@@ -14,4 +14,4 @@ Solução para golpes de falso atendente bancário.
 - Thomas Almeida Ferreira
 
 ##▶️ Como Executar
-1. bash git clone https://github.com/rodrigousousa/projeto-a3-anti-golpes.git
+1. '''bash git clone https://github.com/rodrigousousa/projeto-a3-anti-golpes.git
