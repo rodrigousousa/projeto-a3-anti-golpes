@@ -2,6 +2,8 @@ package com.verificacontato.service;
 
 import com.verificacontato.model.Usuario;
 import com.verificacontato.repository.UsuarioRepository;
+import com.verificacontato.security.JwtUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,14 +21,25 @@ public class UsuarioService {
 
     // Cadastrar novo usuário
     public Usuario cadastrarUsuario(Usuario usuario) {
-        if (usuarioRepository.existsByEmail(usuario.getEmail())) {
-            throw new RuntimeException("E-mail já cadastrado.");
+        if (usuarioRepository.findByEmail(usuario.getEmail()).isPresent()) {
+            throw new RuntimeException("E-mail já cadastrado");
         }
 
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         usuario.setDataCadastro(LocalDateTime.now());
-
         return usuarioRepository.save(usuario);
+    }
+
+    // Login
+    public String login(String email, String senha) {
+        Usuario usuario = usuarioRepository.findByEmail(email)
+            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        if (!passwordEncoder.matches(senha, usuario.getSenha())) {
+            throw new RuntimeException("Credenciais inválidas");
+        }
+
+        return JwtUtil.generateToken(email); // Aqui a JwtUtil está sendo usada
     }
 
     // Buscar por e-mail (usado no login)
@@ -34,4 +47,5 @@ public class UsuarioService {
         return usuarioRepository.findByEmail(email);
     }
 }
+
 
