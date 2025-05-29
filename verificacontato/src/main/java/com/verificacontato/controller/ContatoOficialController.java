@@ -1,12 +1,12 @@
 package com.verificacontato.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import com.verificacontato.dto.ContatoOficialDTO;
 import com.verificacontato.service.ContatoOficialService;
 
 @RestController
@@ -17,9 +17,14 @@ public class ContatoOficialController {
     private ContatoOficialService service;
 
     @GetMapping("/verificar")
-    public ResponseEntity<String> verificarContato(@RequestParam String numero) {
-        boolean existe = service.isContatoOficial(numero);
-        return ResponseEntity.ok(existe ? "Número oficial" : "Número não encontrado na base oficial");
+    public ResponseEntity<?> verificarContato(@RequestParam String numero) {
+        Optional<ContatoOficialDTO> contatoOpt = service.buscarDadosDoContato(numero);
+
+        if (contatoOpt.isPresent()) {
+            return ResponseEntity.ok(contatoOpt.get()); // Retorna JSON com nomeBanco e dataCadastro
+        } else {
+            return ResponseEntity.status(404).body("Número não encontrado na base oficial");
+        }
     }
 }
 
