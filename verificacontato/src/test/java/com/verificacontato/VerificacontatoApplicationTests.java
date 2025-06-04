@@ -1,4 +1,4 @@
-package com.verificacontato.verificacontato;
+package com.verificacontato;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
