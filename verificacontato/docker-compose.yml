@@ -3,12 +3,37 @@ version: "3.8"
 services:
   verificacontato2:
     build: .
-    container_name: verificacontato-app2
+    image: verificacontato-app
+    container_name: verificacontato-app
     ports:
       - "8082:8080"
+    depends_on:
+      - db
+    networks:
+      - verificanet
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/verificacontato
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: admin
+
+  db:
+    image: mysql:8.0
+    container_name: mysql-verificacontato
+    environment:
+      MYSQL_DATABASE: verificacontato
+      MYSQL_ROOT_PASSWORD: admin
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./mysql-init:/docker-entrypoint-initdb.d  
     networks:
       - verificanet
 
+volumes:
+  mysql-data:
+
 networks:
   verificanet:
+
 
