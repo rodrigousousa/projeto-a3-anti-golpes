@@ -66,17 +66,17 @@ POST /api/usuarios – Criar novo usuário
 
 ```
 {
-  "nome": "teste",
-  "email": "teste@gmail.com",
-  "senha": "123456"
+  "nome": "string",
+  "email": "string",
+  "senha": "string"
 }
 ```
 POST /api/login – Autenticar usuário
 
 ```
 {
-  "email": "microserviço@gmail.com",
-  "senha": "123456"
+  "email": "string",
+  "senha": "string"
 }
 ```
 Retorna um token JWT com validade de 24h.
