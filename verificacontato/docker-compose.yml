@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  verificacontato2:
+    build: .
+    container_name: verificacontato-app2
+    ports:
+      - "8082:8080"
+    networks:
+      - verificanet
+
+networks:
+  verificanet:
+

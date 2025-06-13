@@ -17,7 +17,6 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable()) // desativa CSRF para API
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/usuarios", "/api/login").permitAll() // endpoints públicos
                 .anyRequest().authenticated() // outras requisições precisam de token
             )
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
