@@ -9,6 +9,10 @@ Solução para golpes de falso atendente bancário.
 - Spring Boot 3.x
 - MySQL
 - Docker
+- Autenticação JWT
+- Spring Security
+- JPA e Hibernate
+- Testes Unitários
 
 ## 👥 Integrantes 
 - Rodrigo Ferraz Sousa
